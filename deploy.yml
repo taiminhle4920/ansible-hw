@@ -1,0 +1,22 @@
+- name: Deploy
+  hosts: vm2, vm3
+  become: true
+  vars:
+    webserver_port: 8080
+  tasks:
+    - name: Install web server packages
+      apt:
+        name: apache2
+        state: present
+
+    - name: Create custom index.html
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+
+    - name: Start web server
+      ansible.builtin.shell: |
+        service apache2 start
+        sed -i "s/Listen 80/Listen {{ webserver_port }}/" /etc/apache2/ports.conf
+        service apache2 restart
+

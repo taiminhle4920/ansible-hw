@@ -1,0 +1,13 @@
+- name: Undeploy
+  hosts: vm2, vm3
+  become: true
+  tasks:
+    - name: Stop web server
+      ansible.builtin.service:
+        name: apache2
+        state: stopped
+
+    - name: Remove web server packages
+      apt:
+        name: apache2
+        state: absent
