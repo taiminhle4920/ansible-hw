@@ -2,12 +2,12 @@
   hosts: vm2, vm3
   become: true
   tasks:
-    - name: Stop web server
+    - name: Stop webserver
       ansible.builtin.service:
         name: apache2
         state: stopped
 
-    - name: Remove web server packages
+    - name: Remove webserver packages
       apt:
         name: apache2
         state: absent
