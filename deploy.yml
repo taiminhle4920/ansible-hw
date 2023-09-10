@@ -4,19 +4,18 @@
   vars:
     webserver_port: 8080
   tasks:
-    - name: Install web server packages
+    - name: Install webserver packages
       apt:
         name: apache2
         state: present
 
-    - name: Create custom index.html
+    - name: Create index.html
       template:
         src: templates/index.html.j2
         dest: /var/www/html/index.html
 
-    - name: Start web server
+    - name: Start webserver
       ansible.builtin.shell: |
         service apache2 start
-        sed -i "s/Listen 80/Listen {{ webserver_port }}/" /etc/apache2/ports.conf
         service apache2 restart
 
